@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 const {width,height}=Dimensions.get('window');
-const Review=()=>{
+const Review=({navigation})=>{
     const [ordersCard,setOrderCards]=useState([]);
     const getData=async()=>{
         const responseArray=[];
@@ -39,7 +39,9 @@ const Review=()=>{
                             <Text style={[styles.text,{fontSize:15,marginTop:10,width:"100%"}]}>{item.description}</Text>
                             <View style={{flexDirection: 'row',alignItems:"center",justifyContent:"space-between"}}>
                                 <Text style={[styles.text,{fontSize:15}]}>{item.request}</Text>
-                                <TouchableOpacity style={styles.button}>
+                                <TouchableOpacity style={styles.button}
+                                    onPress={()=>navigation.navigate("details",{details:item})}
+                                >
                                     <Text style={[styles.text,{color:"white",fontSize:15}]}>
                                         Details
                                     </Text>
