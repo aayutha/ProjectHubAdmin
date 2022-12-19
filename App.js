@@ -5,13 +5,7 @@ import { View, Text,StyleSheet,style,Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{color:"black"}}>Home</Text>
-    </View>
-  );
-}
+import Review from './screens/Review';
 
 function SettingsScreen() {
   return (
@@ -45,7 +39,7 @@ const App = () => {
           activeTintColor: 'pink',
         }}
       >
-      <Tab.Screen name="Home" component={HomeScreen} options={{
+      <Tab.Screen name="Review" component={Review} options={{
         tabBarIcon:({focused})=>(
           <View style={{alignItems:'center',justifyContent:'center'}}>
             <Image
@@ -58,7 +52,7 @@ const App = () => {
               tintColor:focused ? '#047BD5' : 'black'
             }}
             />
-            <Text style={{color:focused ? '#047BD5' : 'black',fontFamily:"SourceSansPro-Regular"}}>Home</Text>
+            <Text style={{color:focused ? '#047BD5' : 'black',fontFamily:"SourceSansPro-Regular"}}>Review</Text>
           </View>
         )
       }}/>
