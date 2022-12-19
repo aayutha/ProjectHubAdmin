@@ -12,14 +12,92 @@ const {width,height}=Dimensions.get('window');
 const ReviewDetails=({route})=>{
 
     const {details} = route.params;
+    const [detailState,setDetailState]=useState(null);
     useEffect(()=>{
         console.log(details)
+        setDetailState(details);
     },[])
     return(
         <>
             <ScrollView style={styles.container}>
-                <Text style={{width:width,padding:20,textAlign:"center",color:"black",fontWeight:"bold",fontSize:40}}>Review Details</Text>
-                
+                {
+                    detailState===null?null:
+                    <>
+                        <Text style={{width:width,padding:20,textAlign:"center",color:"black",fontWeight:"bold",fontSize:40}}>Review Details</Text>
+                        <View style={{width:"100%",paddingHorizontal:20,paddingVertical:10}}>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:15}}>
+                                Project Name
+                            </Text>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:25,paddingHorizontal:10}}>
+                                {detailState.projectname}
+                            </Text>
+                        </View>
+                        <View style={{width:"100%",paddingHorizontal:20,paddingVertical:10}}>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:15}}>
+                                Project description
+                            </Text>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:25,paddingHorizontal:10}}>
+                                {detailState.description}
+                            </Text>
+                        </View>
+                        <View style={{width:"100%",paddingHorizontal:20,paddingVertical:10}}>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:15}}>
+                                Project duration 
+                            </Text>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:25,paddingHorizontal:10}}>
+                                {detailState.duration}  
+                            </Text>
+                        </View>
+                        <View style={{width:"100%",paddingHorizontal:20,paddingVertical:10}}>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:15}}>
+                                Customer Main
+                            </Text>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:25,paddingHorizontal:10}}>
+                                {detailState.email}
+                            </Text>
+                        </View>
+                        <View style={{width:"100%",paddingHorizontal:20,paddingVertical:10}}>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:15}}>
+                                Project price
+                            </Text>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:25,paddingHorizontal:10}}>
+                                {detailState.price}
+                            </Text>
+                        </View>
+                        <View style={{width:"100%",paddingHorizontal:20,paddingVertical:10}}>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:15}}>
+                                Project Name
+                            </Text>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:25,paddingHorizontal:10}}>
+                                {detailState.projectname}
+                            </Text>
+                        </View>
+                        <View style={{width:"100%",paddingHorizontal:20,paddingVertical:10}}>
+                            <Text style={{width:width,color:"black",fontWeight:"bold",fontSize:20}}>
+                            Technology User Wants
+                            </Text>
+                            <View style={{flexDirection:"row",width:'90%',alignSelf:"center",marginTop:10}}>
+                                {
+                                    detailState.projectTech.map((val)=>(
+                                        <Text
+                                            style={{
+                                                backgroundColor:"orange",
+                                                paddingVertical:10,
+                                                paddingHorizontal:15,
+                                                borderRadius:5,
+                                                color:"white",
+                                                fontWeight:"bold",
+                                                marginHorizontal: 10,
+                                            }}
+                                        >
+                                            {val}
+                                        </Text>
+                                    ))
+                                }
+                            </View>
+                        </View>
+                    </>
+                }
             </ScrollView>
         </>
     )
