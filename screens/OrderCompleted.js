@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react'
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { useState } from 'react';
 const { width, height } = Dimensions.get('window');
 function OrderCompleted({ navigation }) {
+    const [refreshing, setRefreshing] = React.useState(false);
     const [ordersCard, setOrderCards] = useState([]);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        await getData();
+        setRefreshing(false);
+    }, []);
     const getData = async () => {
         const responseArray = [];
         firestore().collection('Orders').where('request', '==', 'Added').get()
@@ -24,7 +30,12 @@ function OrderCompleted({ navigation }) {
         getData();
     }, [])
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} refreshControl={
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+            />
+        }>
             <Text style={{ width: width, padding: 30, textAlign: "center", color: "black", fontWeight: "bold", fontSize: 30 }}>Added Order Section</Text>
             {
                 ordersCard.map((item, index) => (
