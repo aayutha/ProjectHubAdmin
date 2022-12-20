@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Review from './Review';
 import OrderCompleted from './OrderCompleted';
-
+import Query from './Query';
 function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -70,6 +70,25 @@ const TabNavigator = () => {
               }}
             />
             <Text style={{ color: focused ? '#047BD5' : 'black', textAlign: "center", fontFamily: "SourceSansPro-Regular" }}>Settings</Text>
+          </View>
+        )
+      }}
+      />
+
+      <Tab.Screen name='Query' component={Query} options={{
+        tabBarIcon: ({ focused }) => (
+          <View>
+            <Image
+              source={require('../asset/question.png')}
+              resizeMode='contain'
+              style={{
+                width: 25,
+                height: 25,
+                marginLeft: 20,
+                tintColor: focused ? '#047BD5' : 'black'
+              }}
+            />
+            <Text style={{ color: focused ? '#047BD5' : 'black', textAlign: "center", fontFamily: "SourceSansPro-Regular" }}>Query</Text>
           </View>
         )
       }}
