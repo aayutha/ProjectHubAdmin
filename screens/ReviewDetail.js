@@ -5,11 +5,11 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 const { width, height } = Dimensions.get('window');
-const ReviewDetails = ({ route }) => {
+const ReviewDetails = ({ route,navigation }) => {
 
     const { details } = route.params;
     const [detailState, setDetailState] = useState(null);
@@ -17,6 +17,39 @@ const ReviewDetails = ({ route }) => {
         console.log(details)
         setDetailState(details);
     }, [])
+
+    
+
+    const updateStatus=()=>{
+        firestore()
+        .collection('Orders')
+        .doc(detailState.id)
+        .update({
+            request: 'confirm',
+        })
+        .then(() => {
+            navigation.navigate("tab")
+            alert("Status Updates to Confirm")
+        })
+        .catch((e)=>{
+            alert("Something gonna wrong!!");
+        })
+    }
+    const deleteItem=()=>{
+        firestore()
+        .collection('Orders')
+        .doc(detailState.id)
+        .update({
+            request: 'cancel',
+        })
+        .then(() => {
+            navigation.navigate("tab")
+            alert('status Updated to Cancel!');
+        })
+        .catch((e)=>{
+            alert("Something Gonna Wrong!!");
+        })
+    }
     return (
         <>
             <ScrollView style={styles.container}>
@@ -76,7 +109,7 @@ const ReviewDetails = ({ route }) => {
                                 <Text style={{ width: width, color: "black", fontWeight: "bold", fontSize: 20 }}>
                                     Technology User Wants
                                 </Text>
-                                <View style={{ flexDirection: "row", width: '90%', alignSelf: "center", marginTop: 10 }}>
+                                <View style={{ flexDirection: "row", width: '90%', alignSelf: "center", marginTop: 10,flexWrap:"wrap" }}>
                                     {
                                         detailState.projectTech.map((val) => (
                                             <Text
@@ -88,6 +121,7 @@ const ReviewDetails = ({ route }) => {
                                                     color: "white",
                                                     fontWeight: "bold",
                                                     marginHorizontal: 10,
+                                                    marginTop:10
                                                 }}
                                             >
                                                 {val}
@@ -95,6 +129,18 @@ const ReviewDetails = ({ route }) => {
                                         ))
                                     }
                                 </View>
+                            </View>
+                            <View style={{width:'90%',flexDirection:"row",justifyContent:"space-around",alignSelf:"center",marginTop:20}}>
+                                <TouchableOpacity style={[styles.btnBox,{backgroundColor:"orange",borderColor:"white"}]}
+                                    onPress={()=>updateStatus()}
+                                >
+                                    <Text style={{color:"white",fontWeight:"bold"}}>Accept</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.btnBox,{borderColor:"orange"}]}
+                                    onPress={()=>deleteItem()}
+                                >
+                                    <Text style={{color:"orange",fontWeight:"bold"}}>Cancel</Text>
+                                </TouchableOpacity>
                             </View>
                         </>
                 }
@@ -129,6 +175,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    btnBox:{
+        width:100,
+        height:40,
+        borderRadius:5,
+        borderWidth:2,
+        alignItems:"center",
+        justifyContent:"center",
     }
 })
 export default ReviewDetails

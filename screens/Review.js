@@ -5,11 +5,13 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    RefreshControl
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 const {width,height}=Dimensions.get('window');
 const Review=({navigation})=>{
+    const [refreshing, setRefreshing] = React.useState(false);
     const [ordersCard,setOrderCards]=useState([]);
     const getData=async()=>{
         const responseArray=[];
@@ -28,9 +30,21 @@ const Review=({navigation})=>{
     useEffect(()=>{
         getData();
     },[])
+    const onRefresh = React.useCallback(async() => {
+        setRefreshing(true);
+        await getData();
+        setRefreshing(false);
+    }, []);
     return(
         <>
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container}
+                refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                }
+            >
                 <Text style={{width:width,padding:20,textAlign:"center",color:"black",fontWeight:"bold",fontSize:40}}>Review Section</Text>
                 {
                     ordersCard.map((item,index)=>(
