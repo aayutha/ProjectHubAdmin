@@ -1,34 +1,37 @@
 
 import React from 'react'
-import { View, Text,StyleSheet,style,Image } from 'react-native'
+import { View, Text, StyleSheet, style, Image } from 'react-native'
 
 import { NavigationContainer } from '@react-navigation/native';
-import {createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import TabNavigator from './screens/TabNavigator';
 import ReviewDetails from './screens/ReviewDetail';
+import OrderComDetail from './screens/OrderComDetail';
 
 function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{color:"black"}}>Settings</Text>
+      <Text style={{ color: "black" }}>Settings</Text>
     </View>
   );
 }
 
-const Stack=createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  return ( 
+  return (
     <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown:false
-          }}
-        >
-          <Stack.Screen name='tab' component={TabNavigator} />
-          <Stack.Screen name='details' component={ReviewDetails} />
-        </Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false
+        }}
+      >
+        <Stack.Screen name='tab' component={TabNavigator} />
+        <Stack.Screen name='details' component={ReviewDetails} />
+        <Stack.Screen name='OrderComDetails' component={OrderComDetail} />
+
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }
